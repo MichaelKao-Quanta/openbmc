@@ -3,6 +3,7 @@ EXTRA_OEMESON:append = " \
     -Dredfish-oem-manager-fan-data=disabled \
     -Dinsecure-enable-redfish-query=enabled \
     -Dhttp-body-limit=400 \
+    -Dredfish-use-hardcoded-system-location-indicator=disabled \
 "
 PACKAGECONFIG:append = " \
     redfish-dbus-log \
@@ -31,6 +32,9 @@ PACKAGECONFIG:remove:p10bmc = " \
 PACKAGECONFIG:remove:witherspoon = " \
     http-zstd \
 "
+
+PACKAGECONFIG:append = " ${@bb.utils.contains('MACHINE_FEATURES', 'redundant-bmc', 'redundant-bmc', '', d)}"
+PACKAGECONFIG[redundant-bmc] = "-Dredfish-aggregation=enabled"
 
 inherit obmc-phosphor-discovery-service
 

@@ -1,24 +1,4 @@
-#bin/sh
-
-# Create /dev/mem
-if [ ! -c /dev/mem ]; then
-    /bin/mknod /dev/mem c 1 1
-fi
-
-# Disable FMC_WDT2
-FMC_WDT2_CTRL_VAL=$(/sbin/devmem 0x1e620064)
-FMC_WDT2_CTRL_VAL=$((16#${FMC_WDT2_CTRL_VAL#"0x"}))
-SET_VAL=$((FMC_WDT2_CTRL_VAL & 0xFFFFFFFE))
-/sbin/devmem 0x1e620064 32 "$SET_VAL"
-
-# Detect boot flash source
-SLOT_FILE="/run/media/slot"
-mkdir -p "$(dirname "${SLOT_FILE}")"
-if [ "$((FMC_WDT2_CTRL_VAL & 0x00000010))" != "0" ]; then
-    echo "1" > "$SLOT_FILE"
-else
-    echo "0" > "$SLOT_FILE"
-fi
+#!/bin/sh
 
 # Below is the diagram of the smart valve implemtation on the CMM.
 # There are two end-device for smart valve and two communication interfaces.
@@ -53,6 +33,7 @@ POE_DEV="/dev/ttyPOE"
 # Set baud rate to 19200 and raw mode
 stty -F $POE_DEV 19200 raw
 # Send Power Source Configuration Command (0x18) to STM32F for enable PoE
+# shellcheck disable=3037
 echo -e '\x18\x00\x00\x2c\x01\x00\x00\xff\xff\xff\xff\x41' > $POE_DEV
 
 exit 0

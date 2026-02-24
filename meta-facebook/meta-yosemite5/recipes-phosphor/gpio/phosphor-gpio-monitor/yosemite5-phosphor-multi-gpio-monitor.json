@@ -10,8 +10,8 @@
         "Continue": true
     },
     {
-        "Name": "host0-ready",
-        "LineName": "host0-ready",
+        "Name": "FM_BIOS_POST_CMPLT_N",
+        "LineName": "FM_BIOS_POST_CMPLT_N",
         "EventMon": "BOTH",
         "Targets": {
             "RISING": ["deassert-host-ready.service", "mctp_remove.service"],
@@ -391,34 +391,6 @@
             ],
             "FALLING": [
                 "thermal-assert-log@prochot_ALERT_OUTLET_TEMP_N.service"
-            ]
-        },
-        "Continue": true
-    },
-    {
-        "Name": "PVDDCR_CPU0_P0_OCP_N",
-        "LineName": "PVDDCR_CPU0_P0_OCP_N",
-        "EventMon": "BOTH",
-        "Targets": {
-            "RISING": [
-                "vr-fault-deassert-log@mb_PVDDCR_CPU0_P0_OCP_N.service"
-            ],
-            "FALLING": [
-                "vr-fault-assert-log@mb_PVDDCR_CPU0_P0_OCP_N.service"
-            ]
-        },
-        "Continue": true
-    },
-    {
-        "Name": "PVDDCR_CPU1_P0_OCP_N",
-        "LineName": "PVDDCR_CPU1_P0_OCP_N",
-        "EventMon": "BOTH",
-        "Targets": {
-            "RISING": [
-                "vr-fault-deassert-log@mb_PVDDCR_CPU1_P0_OCP_N.service"
-            ],
-            "FALLING": [
-                "vr-fault-assert-log@mb_PVDDCR_CPU1_P0_OCP_N.service"
             ]
         },
         "Continue": true

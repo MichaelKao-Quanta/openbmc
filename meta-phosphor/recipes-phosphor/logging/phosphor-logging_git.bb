@@ -20,7 +20,7 @@ DEPENDS += " \
     systemd \
     virtual/phosphor-logging-callouts \
     "
-SRCREV = "8463dd2404dffe31f84b06e8a0456364159ec8ff"
+SRCREV = "a36e4df0f1e02dce3e7934d9284a6df0d9a122e3"
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[openpower-pels] = " \
         -Dopenpower-pel-extension=enabled, \
@@ -28,12 +28,12 @@ PACKAGECONFIG[openpower-pels] = " \
         libpldm python3, \
         python3, \
         "
-PACKAGECONFIG[use-bmc-pos-in-id] = " \
-        -Duse-bmc-pos-in-id=true, \
-        -Duse-bmc-pos-in-id=false \
+PACKAGECONFIG[redundant-bmc] = " \
+        -Dredundant-bmc=true, \
+        -Dredundant-bmc=false \
         "
 
-PACKAGECONFIG:append = " ${@bb.utils.contains('MACHINE_FEATURES', 'redundant-bmc', 'use-bmc-pos-in-id', '', d)}"
+PACKAGECONFIG:append = " ${@bb.utils.contains('MACHINE_FEATURES', 'redundant-bmc', 'redundant-bmc', '', d)}"
 
 PV = "1.0+git${SRCPV}"
 PR = "r1"
